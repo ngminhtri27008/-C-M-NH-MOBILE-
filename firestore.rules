@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function role() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+    function isAdmin() {
+      return signedIn() && role() == "admin";
+    }
+    function isStaff() {
+      return signedIn() && role() == "staff";
+    }
+
+    // Vai trò chỉ do quản trị viên tạo/cập nhật. Người dùng không thể tự nâng quyền.
+    match /users/{userId} {
+      allow read: if signedIn() && (request.auth.uid == userId || isAdmin());
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Khách truy cập được xem danh mục và giá; chỉ admin/staff được cập nhật giá.
+    match /products/{productId} {
+      allow read: if true;
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin() ||
+        (isStaff() &&
+         request.resource.data.diff(resource.data).affectedKeys()
+           .hasOnly(['prices', 'updatedAt', 'updatedBy']));
+    }
+
+    match /priceLogs/{logId} {
+      allow create: if isAdmin() || isStaff();
+      allow read: if isAdmin();
+      allow update, delete: if false;
+    }
+  }
+}

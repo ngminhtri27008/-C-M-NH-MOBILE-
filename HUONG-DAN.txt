@@ -1,0 +1,71 @@
+ĐỨC MẠNH MOBILE - HƯỚNG DẪN CÀI ĐẶT TRÊN ĐIỆN THOẠI ANDROID
+
+QUAN TRỌNG VỀ TÀI KHOẢN
+- Khách hàng không cần tài khoản.
+- Quản trị viên và từng nhân viên được phân quyền cần tài khoản riêng.
+- Không chia sẻ chung mật khẩu quản trị.
+- Không đưa mật khẩu hoặc khóa bí mật vào mã nguồn.
+- Bộ mã này là bản khởi đầu; cần hoàn thành cấu hình Firebase và kiểm tra trước khi dùng thực tế.
+
+PHẦN A - TẠO FIREBASE
+1. Mở https://console.firebase.google.com/ và đăng nhập Google.
+2. Chọn Add project / Thêm dự án. Đặt tên ví dụ duc-manh-mobile.
+3. Trong dự án, mở Authentication > Get started > Sign-in method.
+4. Bật Email/Password rồi Save.
+5. Mở Firestore Database > Create database. Chọn chế độ production và khu vực gần Việt Nam nếu có lựa chọn phù hợp.
+6. Vào Project settings (bánh răng) > General > Your apps > biểu tượng Web </>.
+7. Đăng ký ứng dụng web. Sao chép firebaseConfig mà Firebase cung cấp.
+8. Mở app.js trong GitHub, thay các giá trị DAN_API_KEY_CUA_BAN, TEN_DU_AN... bằng đúng cấu hình của bạn. Đây là cấu hình ứng dụng web, không phải mật khẩu quản trị.
+9. Trong Firebase > Firestore Database > Rules, dán nội dung file firestore.rules trong gói này rồi Publish.
+
+PHẦN B - TẠO TÀI KHOẢN QUẢN TRỊ ĐẦU TIÊN
+1. Firebase Console > Authentication > Users > Add user.
+2. Tạo email và mật khẩu quản trị.
+3. Sao chép UID của tài khoản vừa tạo.
+4. Firestore Database > Data > Start collection.
+5. Collection ID: users
+6. Document ID: dán UID quản trị.
+7. Thêm field role kiểu string, value admin.
+8. Thêm field email kiểu string, value email quản trị.
+9. Save.
+Sau bước này, đăng nhập vào website bằng tài khoản quản trị.
+
+PHẦN C - ĐƯA CODE LÊN GITHUB
+1. Mở kho lưu trữ GitHub của bạn.
+2. Tải lên các file: index.html, style.css, app.js, robots.txt, sitemap.xml.
+3. Dán nội dung firestore.rules vào Firebase Console, không cần tải file rules lên GitHub.
+4. Đảm bảo index.html nằm ngay thư mục gốc của nhánh main.
+5. GitHub > Settings > Pages.
+6. Build and deployment: Deploy from a branch.
+7. Branch: main; Folder: /(root); Save.
+8. Đợi GitHub Pages xuất bản trang.
+
+PHẦN D - TẠO NHÂN VIÊN
+1. Đăng nhập website bằng tài khoản admin.
+2. Mở mục Quản lý hệ thống.
+3. Nhập email và mật khẩu tạm cho nhân viên, nhấn Tạo tài khoản nhân viên.
+4. Gửi thông tin đăng nhập riêng cho nhân viên qua kênh an toàn.
+5. Nhân viên đăng nhập bằng nút Quản trị và có thể sửa bảng giá, không thể tự tạo thêm nhân viên hay cấp quyền admin.
+Lưu ý: Hãy yêu cầu nhân viên đổi mật khẩu sau lần đăng nhập đầu tiên; bản mẫu hiện chưa có màn hình đổi mật khẩu riêng.
+
+PHẦN E - THÊM DÒNG MÁY VÀ GIÁ
+1. Admin chọn thương hiệu và nhập tên model, nhấn Thêm dòng máy.
+2. Chọn model ở phần Chỉnh sửa bảng giá.
+3. Nhập giá cho từng hạng mục; để 0 nếu chưa có giá (trang khách sẽ hiển thị Liên hệ).
+4. Nhấn Lưu bảng giá.
+
+PHẦN F - GOOGLE
+1. Sau khi trang GitHub Pages hoạt động, sửa canonical trong index.html và URL trong sitemap.xml, robots.txt theo đúng URL website.
+2. Mở https://search.google.com/search-console/
+3. Thêm URL prefix website và xác minh quyền sở hữu theo hướng dẫn Google.
+4. Gửi sitemap.xml, ví dụ https://TEN.github.io/TEN-KHO/sitemap.xml
+5. Dùng URL Inspection để yêu cầu lập chỉ mục trang chủ.
+Google không đảm bảo xếp hạng hoặc lập chỉ mục ngay. Cần nội dung hữu ích, thông tin cửa hàng chính xác và website hoạt động ổn định.
+
+KIỂM TRA TRƯỚC KHI DÙNG THẬT
+- Kiểm tra bằng cửa sổ ẩn danh: khách xem được giá nhưng không thấy quản trị.
+- Kiểm tra tài khoản staff sửa được giá nhưng không thêm model hoặc tạo tài khoản.
+- Kiểm tra admin tạo model và tài khoản staff được.
+- Không nhập dữ liệu khách hàng nhạy cảm vào bảng giá.
+- Sao lưu dữ liệu Firestore định kỳ.
+- Giá mặc định chưa được điền; bạn tự nhập bảng giá thật.

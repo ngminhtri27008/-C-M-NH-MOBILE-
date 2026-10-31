@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Đức Mạnh Mobile | Tra cứu giá sửa chữa điện thoại</title>
+  <meta name="description" content="Tra cứu giá sửa chữa iPhone, Samsung, Vivo, OPPO, Realme và Redmi tại Đức Mạnh Mobile.">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#087b50">
+  <link rel="canonical" href="https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="./"><span class="brand-icon">DM</span><span>ĐỨC MẠNH <b>MOBILE</b><small>TRA CỨU GIÁ SỬA CHỮA</small></span></a>
+    <button id="loginOpen" class="outline light">Quản trị</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow">TRA CỨU NHANH · BẢNG GIÁ TRỰC TUYẾN</p>
+    <h1>Tìm giá sửa chữa<br><em>điện thoại của bạn</em></h1>
+    <p>Chọn hãng, dòng máy và tình trạng cần sửa để xem giá tham khảo.</p>
+    <input id="search" class="search" type="search" placeholder="Tìm iPhone 13, Samsung A54..." aria-label="Tìm tên điện thoại">
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><p class="eyebrow">BƯỚC 1</p><h2>Chọn thương hiệu</h2></div><span id="productCount" class="muted"></span></div>
+    <div id="brands" class="brand-grid"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><p class="eyebrow">BƯỚC 2</p><h2>Chọn dòng máy</h2></div></div>
+    <div id="models" class="model-grid"><p class="muted">Hãy chọn thương hiệu để xem các dòng máy.</p></div>
+  </section>
+
+  <section id="priceSection" class="section hidden">
+    <div class="section-head"><div><p class="eyebrow">BƯỚC 3</p><h2 id="selectedTitle">Bảng giá sửa chữa</h2></div></div>
+    <div class="table-wrap">
+      <table><thead><tr><th>Hạng mục sửa chữa</th><th>Giá tham khảo</th></tr></thead><tbody id="priceRows"></tbody></table>
+    </div>
+    <p class="hint">Giá có thể thay đổi tùy tình trạng máy và linh kiện. Vui lòng liên hệ cửa hàng để xác nhận trước khi sửa.</p>
+  </section>
+
+  <section class="section contact">
+    <h2>Đức Mạnh Mobile</h2>
+    <p>Tra cứu bảng giá sửa chữa điện thoại nhanh chóng và thuận tiện.</p>
+    <p class="muted">Bạn có thể bổ sung địa chỉ, số điện thoại và liên kết Zalo trong phần cấu hình website.</p>
+  </section>
+
+  <section id="adminPanel" class="section admin hidden">
+    <div class="section-head"><div><p class="eyebrow">KHU VỰC NỘI BỘ</p><h2>Quản lý hệ thống</h2></div><button id="logout" class="outline">Đăng xuất</button></div>
+    <p id="whoami" class="muted"></p>
+    <div id="adminTools" class="hidden">
+      <div class="admin-card">
+        <h3>Thêm dòng máy</h3>
+        <div class="form-grid">
+          <label>Thương hiệu<select id="newBrand"></select></label>
+          <label>Tên dòng máy<input id="newModel" placeholder="Ví dụ: iPhone 15 Pro Max"></label>
+        </div>
+        <button id="addModel" class="primary">Thêm dòng máy</button>
+      </div>
+      <div class="admin-card">
+        <h3>Tạo tài khoản nhân viên</h3>
+        <p class="hint">Nhân viên có tài khoản riêng để đăng nhập và sửa giá. Họ không có quyền tạo tài khoản khác hoặc cấp quyền quản trị.</p>
+        <div class="form-grid">
+          <label>Email nhân viên<input id="staffEmail" type="email" placeholder="nhanvien@example.com"></label>
+          <label>Mật khẩu tạm<input id="staffPassword" type="password" minlength="6" placeholder="Ít nhất 6 ký tự"></label>
+        </div>
+        <button id="addStaff" class="primary">Tạo tài khoản nhân viên</button>
+        <p id="staffResult" class="hint"></p>
+      </div>
+    </div>
+    <div class="admin-card">
+      <h3>Chỉnh sửa bảng giá</h3>
+      <label>Chọn dòng máy<select id="editModel"></select></label>
+      <div id="editPrices" class="price-editor"></div>
+      <button id="savePrices" class="primary">Lưu bảng giá</button>
+      <p id="saveResult" class="hint"></p>
+    </div>
+    <p class="hint">Mọi thay đổi giá được ghi nhận người thực hiện và thời gian cập nhật.</p>
+  </section>
+</main>
+
+<footer><b>ĐỨC MẠNH MOBILE</b><span>© <span id="year"></span> · Bảng giá tham khảo</span></footer>
+
+<div id="loginModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+  <div class="modal-card">
+    <button id="loginClose" class="x" aria-label="Đóng">×</button>
+    <p class="eyebrow">DÀNH CHO QUẢN TRỊ & NHÂN VIÊN</p>
+    <h2 id="loginTitle">Đăng nhập</h2>
+    <label>Email<input id="email" type="email" autocomplete="username" placeholder="Email đăng nhập"></label>
+    <label>Mật khẩu<input id="password" type="password" autocomplete="current-password" placeholder="Mật khẩu"></label>
+    <button id="login" class="primary full">Đăng nhập</button>
+    <p id="loginError" class="error" aria-live="polite"></p>
+    <p class="hint">Khách hàng không cần đăng nhập để tra cứu giá.</p>
+  </div>
+</div>
+<div id="toast" class="toast" role="status"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
